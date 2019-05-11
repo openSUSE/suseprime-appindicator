@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=SUSEPrime Appindicator
+Exec=suseprime-appindicator
+GenericName=Desktop switcher for SUSEPrime
+Icon=suseprime-symbolic
+Type=Application
+Categories=Utility;X-SuSE-DesktopUtility;
+StartupNotify=false
+Terminal=false
