@@ -13,7 +13,7 @@ setup(name="suseprimeindicator",
       packages=["suseprimeindicator"],
       data_files=[
           ('/usr/share/icons/hicolor/symbolic/apps/', ['icons/suseprime-symbolic.svg', 'icons/suseprime-intel-symbolic.svg', 'icons/suseprime-nvidia-symbolic.svg']),
-          ('/usr/share/suseprime-appindicator/scripts', ['scripts/pkexec_nvidia', 'scripts/pkexec_intel']),
+          ('/usr/share/suseprime-appindicator/scripts', ['scripts/pkexec_nvidia', 'scripts/pkexec_intel', 'scripts/pkexec_offload']),
           ('/etc/xdg/autostart', ['autostart/suseprime-appindicator.desktop'])],
       scripts=["bin/suseprime-appindicator"]
 )

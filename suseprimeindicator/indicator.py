@@ -24,6 +24,7 @@ APPINDICATOR_ID = 'suseprimeindicator'
 
 intel_notif = _('Switching to Intel staged')
 nvidia_notif = _('Switching to Nvidia staged')
+offload_notif = _('Switching to offload staged')
 reboot_notif = _('Please reboot or relog for changed to take effect')
 error_head = _('Error occured')
 
@@ -48,14 +49,27 @@ def main():
 
 def build_menu():
     menu = gtk.Menu()
-    if (check_current() != 'nvidia'):
+    if (check_current() == 'intel'):
         item_nvidia = gtk.MenuItem.new_with_label(_('Switch to Nvidia'))
         item_nvidia.connect('activate', nvidia)
         menu.append(item_nvidia)
-    if (check_current() != 'intel'):
+        item_offload = gtk.MenuItem.new_with_label(_('Switch to offload'))
+        item_offload.connect('activate', offload)
+        menu.append(item_offload)
+    if (check_current() == 'nvidia'):
         item_intel = gtk.MenuItem.new_with_label(_('Switch to Intel'))
         item_intel.connect('activate', intel)
         menu.append(item_intel)
+        item_offload = gtk.MenuItem.new_with_label(_('Switch to offload'))
+        item_offload.connect('activate', offload)
+        menu.append(item_offload)
+    if (check_current() == 'offload'):
+        item_intel = gtk.MenuItem.new_with_label(_('Switch to Intel'))
+        item_intel.connect('activate', intel)
+        menu.append(item_intel)
+        item_nvidia = gtk.MenuItem.new_with_label(_('Switch to Nvidia'))
+        item_nvidia.connect('activate', nvidia)
+        menu.append(item_nvidia)
     menu.show_all()
     return menu
 
@@ -74,6 +88,15 @@ def intel(_):
         notify.Notification.new(error_head, error.decode("utf-8"), 'dialog-warning').show()
     elif (result):
         notify.Notification.new(intel_notif, reboot_notif, 'suseprime-intel-symbolic').show()
+    else:
+        notify.Notification.new(error_head, output.decode("utf-8"), 'dialog-warning').show()
+
+def offload(_):
+    result, output, error, status = glib.spawn_command_line_sync('/usr/share/suseprime-appindicator/scripts/pkexec_offload')
+    if (error):
+        notify.Notification.new(error_head, error.decode("utf-8"), 'dialog-warning').show()
+    elif (result):
+        notify.Notification.new(offload_notif, reboot_notif, 'suseprime-symbolic').show()
     else:
         notify.Notification.new(error_head, output.decode("utf-8"), 'dialog-warning').show()
 
